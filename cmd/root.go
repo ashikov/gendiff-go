@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"os"
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -12,7 +13,11 @@ var rootCmd = &cobra.Command{
 	Short: "Application that finds differences in configuration files",
 	Args: cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
-		formatter, _ := cmd.Flags().GetString("formatter")
+		formatter, err := cmd.Flags().GetString("formatter")
+		if err !=nil {
+			log.Fatal(err)
+		}
+
 		fmt.Println(formatter)
 	},
 }

@@ -2,17 +2,18 @@ package cmd
 
 import (
 	"os"
+	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-var formatter = "stylish"
 var rootCmd = &cobra.Command{
-	Use:   "gendiff",
+	Use:   "gendiff path1 path2",
 	Short: "Application that finds differences in configuration files",
 	Args: cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
-
+		formatter, _ := cmd.Flags().GetString("formatter")
+		fmt.Println(formatter)
 	},
 }
 
@@ -24,6 +25,5 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().String("formatter", formatter, "Set output formatter")
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.Flags().String("formatter", "stylish", "Set output formatter")
 }

@@ -1,23 +1,12 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 	"os"
-	"path/filepath"
-	"errors"
 
+	"github.com/ashikov/gendiff/pkg"
 	"github.com/spf13/cobra"
 )
-
-func isFileExists(path string) (bool, error) {
-	if _, err := os.Stat(path); err == nil {
-		return true, nil
-	 } else {
-		message := fmt.Sprintf("file %s does not exist", path)
-		return false, errors.New(message)
-	 }
-}
 
 var rootCmd = &cobra.Command{
 	Use:   "gendiff path1 path2",
@@ -31,27 +20,7 @@ var rootCmd = &cobra.Command{
 
 		path1, path2 := args[0], args[1]
 
-		absPath1, err := filepath.Abs(path1)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		absPath2, err := filepath.Abs(path2)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		_, err = isFileExists(absPath1)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		_, err = isFileExists(absPath2)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		fmt.Println("Yo!", formatter)
+		pkg.GenDiff(path1, path2, formatter)
 	},
 }
 
